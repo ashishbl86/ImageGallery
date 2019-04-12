@@ -13,34 +13,25 @@ class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocument
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         delegate = self
-        
-        allowsDocumentCreation = true
+        allowsDocumentCreation = false
         allowsPickingMultipleItems = false
-        
-        // Update the style of the UIDocumentBrowserViewController
-        // browserUserInterfaceStyle = .dark
-        // view.tintColor = .white
-        
-        // Specify the allowed content types of your application via the Info.plist.
-        
-        // Do any additional setup after loading the view.
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            template = try? FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent("sample.json")
+            if let template = template {
+                let jsonString = #"[{"urlString":"https:\/\/cosmos-images2.imgix.net\/file\/spina\/photo\/14772\/GettyImages-691120979.jpg?ixlib=rails-2.1.4&auto=format&ch=Width%2CDPR&fit=max&w=835","aspectRatio":0.74903474903474898},{"urlString":"https:\/\/www.sciencemag.org\/sites\/default\/files\/styles\/inline__450w__no_aspect\/public\/NationalGeographic_1561927_16x9.jpg?itok=q7LvZb-6","aspectRatio":0.56000000000000005},{"urlString":"https:\/\/www.drusillas.co.uk\/images\/whats-on-card\/redpanda-profile-400x400-984.jpg","aspectRatio":0.62323943661971826},{"urlString":"https:\/\/cdn.britannica.com\/s:900x675\/80\/140480-131-28E57753.jpg","aspectRatio":0.74903474903474898},{"urlString":"https:\/\/img.jakpost.net\/c\/2018\/11\/28\/2018_11_28_59557_1543397471._large.jpg","aspectRatio":0.66909090909090907}]"#
+                let sampleData = Data(jsonString.utf8)
+                allowsDocumentCreation = FileManager.default.createFile(atPath: template.path, contents: sampleData)
+            }
+        }
     }
     
+    var template: URL?
     
     // MARK: UIDocumentBrowserViewControllerDelegate
     
     func documentBrowser(_ controller: UIDocumentBrowserViewController, didRequestDocumentCreationWithHandler importHandler: @escaping (URL?, UIDocumentBrowserViewController.ImportMode) -> Void) {
-        let newDocumentURL: URL? = nil
-        
-        // Set the URL for the new document here. Optionally, you can present a template chooser before calling the importHandler.
-        // Make sure the importHandler is always called, even if the user cancels the creation request.
-        if newDocumentURL != nil {
-            importHandler(newDocumentURL, .move)
-        } else {
-            importHandler(nil, .none)
-        }
+        importHandler(template, .copy)
     }
     
     func documentBrowser(_ controller: UIDocumentBrowserViewController, didPickDocumentsAt documentURLs: [URL]) {
@@ -63,12 +54,13 @@ class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocument
     // MARK: Document Presentation
     
     func presentDocument(at documentURL: URL) {
-        
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-        let documentViewController = storyBoard.instantiateViewController(withIdentifier: "DocumentViewController") as! DocumentViewController
-        documentViewController.document = Document(fileURL: documentURL)
-        
-        present(documentViewController, animated: true, completion: nil)
+        let viewController = storyBoard.instantiateViewController(withIdentifier: "ImageGallery")
+        if let imageGalleryNVC = viewController as? UINavigationController, let imageGalleryVC = imageGalleryNVC.viewControllers.first as? GalleryViewController {
+            imageGalleryVC.imageGalleryDocument = ImageGalleryDocument(fileURL: documentURL)
+            print("Localized name in document vc \(imageGalleryVC.imageGalleryDocument.localizedName)")
+            present(imageGalleryNVC, animated: true)
+        }
     }
 }
 

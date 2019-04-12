@@ -9,23 +9,27 @@
 /* Begin PBXBuildFile section */
 		FF56CD68225D80CB00E9D1D2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF56CD67225D80CB00E9D1D2 /* AppDelegate.swift */; };
 		FF56CD6A225D80CB00E9D1D2 /* DocumentBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF56CD69225D80CB00E9D1D2 /* DocumentBrowserViewController.swift */; };
-		FF56CD6C225D80CB00E9D1D2 /* DocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF56CD6B225D80CB00E9D1D2 /* DocumentViewController.swift */; };
-		FF56CD6E225D80CB00E9D1D2 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF56CD6D225D80CB00E9D1D2 /* Document.swift */; };
+		FF56CD6E225D80CB00E9D1D2 /* ImageGalleryDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF56CD6D225D80CB00E9D1D2 /* ImageGalleryDocument.swift */; };
 		FF56CD71225D80CB00E9D1D2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF56CD6F225D80CB00E9D1D2 /* Main.storyboard */; };
 		FF56CD73225D80CC00E9D1D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF56CD72225D80CC00E9D1D2 /* Assets.xcassets */; };
 		FF56CD76225D80CC00E9D1D2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF56CD74225D80CC00E9D1D2 /* LaunchScreen.storyboard */; };
+		FFB43597225ED13F00732E2C /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB43594225ED13F00732E2C /* GalleryViewController.swift */; };
+		FFB43598225ED13F00732E2C /* ImageThumbnailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB43595225ED13F00732E2C /* ImageThumbnailCollectionViewCell.swift */; };
+		FFB43599225ED13F00732E2C /* GalleryImageFullscreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB43596225ED13F00732E2C /* GalleryImageFullscreenController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		FF56CD64225D80CB00E9D1D2 /* ImageGallery_Persistent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageGallery_Persistent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF56CD67225D80CB00E9D1D2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FF56CD69225D80CB00E9D1D2 /* DocumentBrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentBrowserViewController.swift; sourceTree = "<group>"; };
-		FF56CD6B225D80CB00E9D1D2 /* DocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentViewController.swift; sourceTree = "<group>"; };
-		FF56CD6D225D80CB00E9D1D2 /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
+		FF56CD6D225D80CB00E9D1D2 /* ImageGalleryDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGalleryDocument.swift; sourceTree = "<group>"; };
 		FF56CD70225D80CB00E9D1D2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FF56CD72225D80CC00E9D1D2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FF56CD75225D80CC00E9D1D2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FF56CD77225D80CC00E9D1D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FFB43594225ED13F00732E2C /* GalleryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
+		FFB43595225ED13F00732E2C /* ImageThumbnailCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageThumbnailCollectionViewCell.swift; sourceTree = "<group>"; };
+		FFB43596225ED13F00732E2C /* GalleryImageFullscreenController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GalleryImageFullscreenController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,13 +62,15 @@
 		FF56CD66225D80CB00E9D1D2 /* ImageGallery_Persistent */ = {
 			isa = PBXGroup;
 			children = (
-				FF56CD67225D80CB00E9D1D2 /* AppDelegate.swift */,
-				FF56CD69225D80CB00E9D1D2 /* DocumentBrowserViewController.swift */,
-				FF56CD6B225D80CB00E9D1D2 /* DocumentViewController.swift */,
-				FF56CD6D225D80CB00E9D1D2 /* Document.swift */,
 				FF56CD6F225D80CB00E9D1D2 /* Main.storyboard */,
+				FF56CD69225D80CB00E9D1D2 /* DocumentBrowserViewController.swift */,
+				FF56CD6D225D80CB00E9D1D2 /* ImageGalleryDocument.swift */,
+				FFB43594225ED13F00732E2C /* GalleryViewController.swift */,
+				FFB43596225ED13F00732E2C /* GalleryImageFullscreenController.swift */,
+				FFB43595225ED13F00732E2C /* ImageThumbnailCollectionViewCell.swift */,
 				FF56CD72225D80CC00E9D1D2 /* Assets.xcassets */,
 				FF56CD74225D80CC00E9D1D2 /* LaunchScreen.storyboard */,
+				FF56CD67225D80CB00E9D1D2 /* AppDelegate.swift */,
 				FF56CD77225D80CC00E9D1D2 /* Info.plist */,
 			);
 			path = ImageGallery_Persistent;
@@ -141,10 +147,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF56CD6E225D80CB00E9D1D2 /* Document.swift in Sources */,
-				FF56CD6C225D80CB00E9D1D2 /* DocumentViewController.swift in Sources */,
+				FF56CD6E225D80CB00E9D1D2 /* ImageGalleryDocument.swift in Sources */,
+				FFB43598225ED13F00732E2C /* ImageThumbnailCollectionViewCell.swift in Sources */,
+				FFB43597225ED13F00732E2C /* GalleryViewController.swift in Sources */,
 				FF56CD6A225D80CB00E9D1D2 /* DocumentBrowserViewController.swift in Sources */,
 				FF56CD68225D80CB00E9D1D2 /* AppDelegate.swift in Sources */,
+				FFB43599225ED13F00732E2C /* GalleryImageFullscreenController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
