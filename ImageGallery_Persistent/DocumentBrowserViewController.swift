@@ -57,13 +57,13 @@ class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocument
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let transitionAnimator = transitionController(forDocumentAt: currentlyPresentedDocumentUrl)
-        transitionAnimator.targetView = presented.view.snapshotView(afterScreenUpdates: true)
+        transitionAnimator.targetView = presented.view.snapshotView(afterScreenUpdates: false)
         return transitionAnimator
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let transitionAnimator = transitionController(forDocumentAt: currentlyPresentedDocumentUrl)
-        transitionAnimator.targetView = dismissed.view.snapshotView(afterScreenUpdates: true)
+        transitionAnimator.targetView = dismissed.view.snapshotView(afterScreenUpdates: false)
         return transitionAnimator
     }
     
