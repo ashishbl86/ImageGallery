@@ -54,7 +54,6 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
                 self.dismiss(animated: true)
             }
         }
-        print("Is drag interaction enabled: \(collectionView.dragInteractionEnabled)")
         collectionView.dragInteractionEnabled = true
     }
     
@@ -82,8 +81,6 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
     }
     
     private func didReceiveImageInfo(for id: Int, url: URL) {
-        print("Received url:\(url.absoluteString) for cell id:\(id)")
-        
         if let imageUrl = url.imageURLString {
             if var imageInfo = cellIdToImageInfo[id] {
                 imageInfo.urlString = imageUrl
@@ -97,7 +94,6 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
     }
     
     private func didReceiveImageInfo(for id: Int, aspectRatio: CGFloat) {
-        print("Received aspectratio:\(aspectRatio) for cell id:\(id)")
         if var imageInfo = cellIdToImageInfo[id] {
             imageInfo.aspectRatio = aspectRatio
             cellIdToImageInfo[id] = imageInfo
@@ -108,7 +104,6 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
     private func updateCellIfFeasible(with id: Int) {
         if let cellImageInfo = cellIdToImageInfo[id], cellImageInfo.allInfoAvailable {
             let cellLocation = cellList.firstIndex(of: id)!
-            print("Reloading cell at \(cellLocation)")
             collectionView.reloadItems(at: [IndexPath(item: cellLocation, section: 0)])
         }
     }
@@ -150,7 +145,6 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("Cell requested at \(indexPath)")
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageThumbnail", for: indexPath)
         if let thumbnailCell = cell as? ImageThumbnailCollectionViewCell {
             let cellId = cellList[indexPath.item]
@@ -198,8 +192,6 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
                 cellList.insert(droppedImageCellId, at: droppedItemIndexPath.item)
                 cellIdToImageInfo[droppedImageCellId] = ImageInfo()
                 
-                print("Cell dropped at \(droppedItemIndexPath) with id:\(droppedImageCellId)")
-
                 item.dragItem.itemProvider.loadObject(ofClass: NSURL.self) { [weak self] (data, error) in
                     DispatchQueue.main.async {
                         if let url = data as? URL {

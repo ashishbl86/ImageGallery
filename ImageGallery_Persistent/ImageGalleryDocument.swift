@@ -15,7 +15,6 @@ class ImageGalleryDocument: UIDocument {
     override func contents(forType typeName: String) throws -> Any {
         // Encode your document with an instance of NSData or NSFileWrapper
         let jsonData = try! JSONEncoder().encode(galleryImageInfo)
-        print(String(data: jsonData, encoding: .utf8)!)
         return jsonData
     }
     

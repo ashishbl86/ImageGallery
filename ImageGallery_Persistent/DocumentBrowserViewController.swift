@@ -9,7 +9,7 @@
 import UIKit
 
 
-class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocumentBrowserViewControllerDelegate {
+class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocumentBrowserViewControllerDelegate, UIViewControllerTransitioningDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,14 +53,28 @@ class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocument
     
     // MARK: Document Presentation
     
+    var currentlyPresentedDocumentUrl: URL!
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        let transitionAnimator = transitionController(forDocumentAt: currentlyPresentedDocumentUrl)
+        transitionAnimator.targetView = presented.view.snapshotView(afterScreenUpdates: true)
+        return transitionAnimator
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        let transitionAnimator = transitionController(forDocumentAt: currentlyPresentedDocumentUrl)
+        transitionAnimator.targetView = dismissed.view.snapshotView(afterScreenUpdates: true)
+        return transitionAnimator
+    }
+    
     func presentDocument(at documentURL: URL) {
+        currentlyPresentedDocumentUrl = documentURL
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let viewController = storyBoard.instantiateViewController(withIdentifier: "ImageGallery")
         if let imageGalleryNVC = viewController as? UINavigationController, let imageGalleryVC = imageGalleryNVC.viewControllers.first as? GalleryViewController {
+            imageGalleryNVC.transitioningDelegate = self
             imageGalleryVC.imageGalleryDocument = ImageGalleryDocument(fileURL: documentURL)
-            print("Localized name in document vc \(imageGalleryVC.imageGalleryDocument.localizedName)")
             present(imageGalleryNVC, animated: true)
         }
     }
 }
-

@@ -28,7 +28,7 @@
         <!--Gallery View Controller-->
         <scene sceneID="dq9-0h-efu">
             <objects>
-                <viewController id="qIh-Te-iaC" customClass="GalleryViewController" customModule="ImageGallery" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="qIh-Te-iaC" customClass="GalleryViewController" customModule="ImageGallery_Persistent" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ts1-ZM-DwS">
                         <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -43,7 +43,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ImageThumbnail" id="H6j-f5-x8A" customClass="ImageThumbnailCollectionViewCell" customModule="ImageGallery" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ImageThumbnail" id="H6j-f5-x8A" customClass="ImageThumbnailCollectionViewCell" customModule="ImageGallery_Persistent" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -114,7 +114,7 @@ Drag and drop to add images.</string>
         <!--Gallery Image Fullscreen Controller-->
         <scene sceneID="DOH-bt-bDf">
             <objects>
-                <viewController id="Aow-JP-GCv" customClass="GalleryImageFullscreenController" customModule="ImageGallery" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Aow-JP-GCv" customClass="GalleryImageFullscreenController" customModule="ImageGallery_Persistent" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4dN-Dl-uJx">
                         <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

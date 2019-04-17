@@ -10,11 +10,7 @@ import UIKit
 
 class GalleryImageFullscreenController: UIViewController, UIScrollViewDelegate {
 
-    var imageForFullscreen: UIImage? {
-        didSet {
-            print("Fullscreen controller image set to finite value: \(imageForFullscreen != nil)")
-        }
-    }
+    var imageForFullscreen: UIImage?
     
     @IBOutlet weak var scrollView: UIScrollView! {
         didSet {
@@ -40,28 +36,16 @@ class GalleryImageFullscreenController: UIViewController, UIScrollViewDelegate {
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
         scrollViewWidth.constant = scrollView.contentSize.width
         scrollViewHeight.constant = scrollView.contentSize.height
-        print("Content size after zooming: \(scrollView.contentSize)")
-        print("Scroll view frame after zooming: \(scrollView.frame)")
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         scrollView.zoom(to: imageView.bounds, animated: true)
-        print("__Image view bounds: \(imageView.bounds)")
-        //scrollView.contentSize = image.size
-        print("__Scroll view content area: \(scrollView.contentSize)")
-        print("__Scroll view frame: \(scrollView.frame)")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         if let image = imageForFullscreen {
             imageView.image = image
-            //imageView.sizeToFit()
-            print("Image size: \(image.size)")
-            print("Image view bounds: \(imageView.bounds)")
-            //scrollView.contentSize = image.size
-            print("Scroll view content area: \(scrollView.contentSize)")
-            print("Scroll view frame: \(scrollView.frame)")
         }
     }
 }

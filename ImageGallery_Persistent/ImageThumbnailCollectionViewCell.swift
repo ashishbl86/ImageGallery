@@ -20,11 +20,9 @@ class ImageThumbnailCollectionViewCell: UICollectionViewCell {
     var imageUrl: String?
     {
         didSet {
-            print("imageURL set to \(imageUrl)")
             activityIndicator(setTo: .on)
             imageView.image = nil
             if let urlString = imageUrl {
-                print("Triggering fetch for url \(urlString)")
                 fetchImage(with: urlString)
             }
         }
@@ -59,7 +57,6 @@ class ImageThumbnailCollectionViewCell: UICollectionViewCell {
                 if let imageData = try? Data(contentsOf: imageUrl){
                     if let image = UIImage(data: imageData) {
                         DispatchQueue.main.async { [weak self] in
-                            print("Image data received in cell. Received data for url:\(urlString). Current cell url:\(self?.imageUrl)")
                             if self?.imageUrl == urlString {
                                 self?.activityIndicator(setTo: .off)
                                 self?.imageView.image = image
