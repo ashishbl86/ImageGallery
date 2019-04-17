@@ -21,7 +21,7 @@ class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocument
             if let template = template {
                 let jsonString = #"[{"urlString":"https:\/\/cosmos-images2.imgix.net\/file\/spina\/photo\/14772\/GettyImages-691120979.jpg?ixlib=rails-2.1.4&auto=format&ch=Width%2CDPR&fit=max&w=835","aspectRatio":0.74903474903474898},{"urlString":"https:\/\/www.sciencemag.org\/sites\/default\/files\/styles\/inline__450w__no_aspect\/public\/NationalGeographic_1561927_16x9.jpg?itok=q7LvZb-6","aspectRatio":0.56000000000000005},{"urlString":"https:\/\/www.drusillas.co.uk\/images\/whats-on-card\/redpanda-profile-400x400-984.jpg","aspectRatio":0.62323943661971826},{"urlString":"https:\/\/cdn.britannica.com\/s:900x675\/80\/140480-131-28E57753.jpg","aspectRatio":0.74903474903474898},{"urlString":"https:\/\/img.jakpost.net\/c\/2018\/11\/28\/2018_11_28_59557_1543397471._large.jpg","aspectRatio":0.66909090909090907}]"#
                 let sampleData = Data(jsonString.utf8)
-                allowsDocumentCreation = FileManager.default.createFile(atPath: template.path, contents: sampleData)
+                allowsDocumentCreation = FileManager.default.createFile(atPath: template.path, contents: Data())
             }
         }
     }
