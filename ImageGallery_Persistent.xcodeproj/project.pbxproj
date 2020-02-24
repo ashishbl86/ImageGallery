@@ -19,7 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		FF56CD64225D80CB00E9D1D2 /* ImageGallery_Persistent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageGallery_Persistent.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF229EED24036DFE002BFA95 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		FF56CD64225D80CB00E9D1D2 /* ImageGallery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageGallery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF56CD67225D80CB00E9D1D2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FF56CD69225D80CB00E9D1D2 /* DocumentBrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentBrowserViewController.swift; sourceTree = "<group>"; };
 		FF56CD6D225D80CB00E9D1D2 /* ImageGalleryDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGalleryDocument.swift; sourceTree = "<group>"; };
@@ -46,6 +47,7 @@
 		FF56CD5B225D80CB00E9D1D2 = {
 			isa = PBXGroup;
 			children = (
+				FF229EED24036DFE002BFA95 /* README.md */,
 				FF56CD66225D80CB00E9D1D2 /* ImageGallery_Persistent */,
 				FF56CD65225D80CB00E9D1D2 /* Products */,
 			);
@@ -54,7 +56,7 @@
 		FF56CD65225D80CB00E9D1D2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FF56CD64225D80CB00E9D1D2 /* ImageGallery_Persistent.app */,
+				FF56CD64225D80CB00E9D1D2 /* ImageGallery.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -93,7 +95,7 @@
 			);
 			name = ImageGallery_Persistent;
 			productName = ImageGallery_Persistent;
-			productReference = FF56CD64225D80CB00E9D1D2 /* ImageGallery_Persistent.app */;
+			productReference = FF56CD64225D80CB00E9D1D2 /* ImageGallery.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -306,9 +308,9 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "AshishBansal.ImageGallery-Persistent";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = ImageGallery;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -324,9 +326,9 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "AshishBansal.ImageGallery-Persistent";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = ImageGallery;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};

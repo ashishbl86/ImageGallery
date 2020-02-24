@@ -14,16 +14,17 @@ class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocument
     override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
-        allowsDocumentCreation = false
+        //allowsDocumentCreation = false
         allowsPickingMultipleItems = false
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            template = try? FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent("sample.json")
-            if let template = template {
-                let jsonString = #"[{"urlString":"https:\/\/cosmos-images2.imgix.net\/file\/spina\/photo\/14772\/GettyImages-691120979.jpg?ixlib=rails-2.1.4&auto=format&ch=Width%2CDPR&fit=max&w=835","aspectRatio":0.74903474903474898},{"urlString":"https:\/\/www.sciencemag.org\/sites\/default\/files\/styles\/inline__450w__no_aspect\/public\/NationalGeographic_1561927_16x9.jpg?itok=q7LvZb-6","aspectRatio":0.56000000000000005},{"urlString":"https:\/\/www.drusillas.co.uk\/images\/whats-on-card\/redpanda-profile-400x400-984.jpg","aspectRatio":0.62323943661971826},{"urlString":"https:\/\/cdn.britannica.com\/s:900x675\/80\/140480-131-28E57753.jpg","aspectRatio":0.74903474903474898},{"urlString":"https:\/\/img.jakpost.net\/c\/2018\/11\/28\/2018_11_28_59557_1543397471._large.jpg","aspectRatio":0.66909090909090907}]"#
-                let sampleData = Data(jsonString.utf8)
-                allowsDocumentCreation = FileManager.default.createFile(atPath: template.path, contents: Data())
-            }
+        
+        //if UIDevice.current.userInterfaceIdiom == .pad {
+        template = try? FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent("Untitled.json")
+        if let template = template {
+            let jsonString = #"[{"urlString":"https:\/\/cosmos-images2.imgix.net\/file\/spina\/photo\/14772\/GettyImages-691120979.jpg?ixlib=rails-2.1.4&auto=format&ch=Width%2CDPR&fit=max&w=835","aspectRatio":0.74903474903474898},{"urlString":"https:\/\/www.sciencemag.org\/sites\/default\/files\/styles\/inline__450w__no_aspect\/public\/NationalGeographic_1561927_16x9.jpg?itok=q7LvZb-6","aspectRatio":0.56000000000000005},{"urlString":"https:\/\/www.drusillas.co.uk\/images\/whats-on-card\/redpanda-profile-400x400-984.jpg","aspectRatio":0.62323943661971826},{"urlString":"https:\/\/cdn.britannica.com\/s:900x675\/80\/140480-131-28E57753.jpg","aspectRatio":0.74903474903474898},{"urlString":"https:\/\/img.jakpost.net\/c\/2018\/11\/28\/2018_11_28_59557_1543397471._large.jpg","aspectRatio":0.66909090909090907}]"#
+            let sampleData = Data(jsonString.utf8)
+            allowsDocumentCreation = FileManager.default.createFile(atPath: template.path, contents: sampleData)
         }
+        //}
     }
     
     var template: URL?
@@ -74,6 +75,7 @@ class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocument
         if let imageGalleryNVC = viewController as? UINavigationController, let imageGalleryVC = imageGalleryNVC.viewControllers.first as? GalleryViewController {
             imageGalleryNVC.transitioningDelegate = self
             imageGalleryVC.imageGalleryDocument = ImageGalleryDocument(fileURL: documentURL)
+            imageGalleryNVC.modalPresentationStyle = .fullScreen
             present(imageGalleryNVC, animated: true)
         }
     }

@@ -8,6 +8,16 @@
 
 import UIKit
 
+struct ImageInfo : Equatable, Codable
+{
+    var urlString: String?
+    var aspectRatio: CGFloat?
+    
+    var allInfoAvailable: Bool {
+        return urlString != nil && aspectRatio != nil
+    }
+}
+
 class ImageGalleryDocument: UIDocument {
     
     var galleryImageInfo = [ImageInfo]()

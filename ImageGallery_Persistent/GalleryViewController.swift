@@ -8,16 +8,6 @@
 
 import UIKit
 
-struct ImageInfo : Equatable, Codable
-{
-    var urlString: String?
-    var aspectRatio: CGFloat?
-    
-    var allInfoAvailable: Bool {
-        return urlString != nil && aspectRatio != nil
-    }
-}
-
 class GalleryViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDragDelegate, UICollectionViewDropDelegate
 {
     var imageGalleryDocument: ImageGalleryDocument!
