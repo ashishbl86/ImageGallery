@@ -48,7 +48,7 @@
 			isa = PBXGroup;
 			children = (
 				FF229EED24036DFE002BFA95 /* README.md */,
-				FF56CD66225D80CB00E9D1D2 /* ImageGallery_Persistent */,
+				FF56CD66225D80CB00E9D1D2 /* ImageGallery */,
 				FF56CD65225D80CB00E9D1D2 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -61,7 +61,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		FF56CD66225D80CB00E9D1D2 /* ImageGallery_Persistent */ = {
+		FF56CD66225D80CB00E9D1D2 /* ImageGallery */ = {
 			isa = PBXGroup;
 			children = (
 				FF56CD6F225D80CB00E9D1D2 /* Main.storyboard */,
@@ -75,15 +75,15 @@
 				FF56CD67225D80CB00E9D1D2 /* AppDelegate.swift */,
 				FF56CD77225D80CC00E9D1D2 /* Info.plist */,
 			);
-			path = ImageGallery_Persistent;
+			path = ImageGallery;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		FF56CD63225D80CB00E9D1D2 /* ImageGallery_Persistent */ = {
+		FF56CD63225D80CB00E9D1D2 /* ImageGallery */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FF56CD7A225D80CC00E9D1D2 /* Build configuration list for PBXNativeTarget "ImageGallery_Persistent" */;
+			buildConfigurationList = FF56CD7A225D80CC00E9D1D2 /* Build configuration list for PBXNativeTarget "ImageGallery" */;
 			buildPhases = (
 				FF56CD60225D80CB00E9D1D2 /* Sources */,
 				FF56CD61225D80CB00E9D1D2 /* Frameworks */,
@@ -93,7 +93,7 @@
 			);
 			dependencies = (
 			);
-			name = ImageGallery_Persistent;
+			name = ImageGallery;
 			productName = ImageGallery_Persistent;
 			productReference = FF56CD64225D80CB00E9D1D2 /* ImageGallery.app */;
 			productType = "com.apple.product-type.application";
@@ -113,7 +113,7 @@
 					};
 				};
 			};
-			buildConfigurationList = FF56CD5F225D80CB00E9D1D2 /* Build configuration list for PBXProject "ImageGallery_Persistent" */;
+			buildConfigurationList = FF56CD5F225D80CB00E9D1D2 /* Build configuration list for PBXProject "ImageGallery" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -126,7 +126,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				FF56CD63225D80CB00E9D1D2 /* ImageGallery_Persistent */,
+				FF56CD63225D80CB00E9D1D2 /* ImageGallery */,
 			);
 		};
 /* End PBXProject section */
@@ -335,7 +335,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		FF56CD5F225D80CB00E9D1D2 /* Build configuration list for PBXProject "ImageGallery_Persistent" */ = {
+		FF56CD5F225D80CB00E9D1D2 /* Build configuration list for PBXProject "ImageGallery" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FF56CD78225D80CC00E9D1D2 /* Debug */,
@@ -344,7 +344,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FF56CD7A225D80CC00E9D1D2 /* Build configuration list for PBXNativeTarget "ImageGallery_Persistent" */ = {
+		FF56CD7A225D80CC00E9D1D2 /* Build configuration list for PBXNativeTarget "ImageGallery" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FF56CD7B225D80CC00E9D1D2 /* Debug */,

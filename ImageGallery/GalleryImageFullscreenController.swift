@@ -24,9 +24,21 @@ class GalleryImageFullscreenController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        scrollViewWidth.constant = view.bounds.width/2
+        scrollViewHeight.constant = view.bounds.height/2
+        scrollView.minimumZoomScale = calculateMinimumZoomScale()
+        scrollView.maximumZoomScale = scrollView.minimumZoomScale * 3
+        imageView.image = imageForFullscreen
+    }
+    
+    func calculateMinimumZoomScale() -> CGFloat {
+        if let imageSize = imageForFullscreen?.size {
+            let scaleXValue = view.bounds.width/imageSize.width
+            let scaleYValue = view.bounds.height/imageSize.height
+            return min(scaleXValue, scaleYValue)
+        }
         
-        scrollView.minimumZoomScale = 0.2
-        scrollView.maximumZoomScale = 3
+        return 0.5
     }
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
@@ -38,14 +50,8 @@ class GalleryImageFullscreenController: UIViewController, UIScrollViewDelegate {
         scrollViewHeight.constant = scrollView.contentSize.height
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        scrollView.zoom(to: imageView.bounds, animated: true)
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
-        if let image = imageForFullscreen {
-            imageView.image = image
-        }
+        view.layoutIfNeeded()
+        scrollView.zoom(to: imageView.bounds, animated: false)
     }
 }

@@ -10,7 +10,7 @@ One to note is that the other app (i.e. from which images are dragged) also need
 For testing purposes, new galleries are created with few sample images instead of being empty.
 
 #### App highlights
-* Addition of images using iOS Drag and Drop feature.
+* Addition of images using iOS' Drag and Drop feature.
 * Image gallery is implemented using```UICollectionView```.
 * You can use *pinch to zoom* to resize image thumbnails. Implemented using Gesture recognisers.
 * Images can be rearranged within a gallery. Also implemented using Drag and Drop.
