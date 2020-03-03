@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  ImageGallery_Persistent
+//  ImageGallery
 //
 //  Created by Ashish Bansal on 10/04/19.
 //  Copyright © 2019 Ashish Bansal. All rights reserved.
