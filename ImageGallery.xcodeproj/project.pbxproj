@@ -77,8 +77,8 @@
 				FF56CD69225D80CB00E9D1D2 /* DocumentBrowserViewController.swift */,
 				FF56CD6D225D80CB00E9D1D2 /* ImageGalleryDocument.swift */,
 				FFB43594225ED13F00732E2C /* GalleryViewController.swift */,
-				FFB43596225ED13F00732E2C /* GalleryImageFullscreenController.swift */,
 				FFB43595225ED13F00732E2C /* ImageThumbnailCollectionViewCell.swift */,
+				FFB43596225ED13F00732E2C /* GalleryImageFullscreenController.swift */,
 				FF56CD72225D80CC00E9D1D2 /* Assets.xcassets */,
 				FF56CD74225D80CC00E9D1D2 /* LaunchScreen.storyboard */,
 				FF56CD67225D80CB00E9D1D2 /* AppDelegate.swift */,
@@ -327,6 +327,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = AWZNFT2MNX;
 				INFOPLIST_FILE = ImageGallery/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -334,7 +335,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "AshishBansal.ImageGallery-Persistent";
 				PRODUCT_NAME = ImageGallery;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -345,6 +346,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = AWZNFT2MNX;
 				INFOPLIST_FILE = ImageGallery/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -352,7 +354,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "AshishBansal.ImageGallery-Persistent";
 				PRODUCT_NAME = ImageGallery;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

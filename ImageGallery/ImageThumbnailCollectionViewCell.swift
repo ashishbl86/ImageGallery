@@ -8,7 +8,70 @@
 
 import UIKit
 
-class ImageThumbnailCollectionViewCell: UICollectionViewCell {
+protocol ImageThumbnailCellDelegate {
+    func deleteCell(withId: Int)
+}
+
+class ImageThumbnailCollectionViewCell: UICollectionViewCell, UIContextMenuInteractionDelegate {
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setupContextMenuInteraction()
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupContextMenuInteraction()
+    }
+    
+    private func setupContextMenuInteraction() {
+        let contextMenuInteraction = UIContextMenuInteraction(delegate: self)
+        addInteraction(contextMenuInteraction)
+    }
+    
+    private var destinationViewForContextMenuActionDelete: UIView!
+    
+    private func createDestinationViewForContextMenuActionDelete() {
+        destinationViewForContextMenuActionDelete = snapshotView(afterScreenUpdates: true)!
+        
+        destinationViewForContextMenuActionDelete.contentMode = .scaleAspectFit
+        destinationViewForContextMenuActionDelete.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(destinationViewForContextMenuActionDelete)
+        contentView.sendSubviewToBack(destinationViewForContextMenuActionDelete)
+        NSLayoutConstraint.activate([
+            destinationViewForContextMenuActionDelete.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            destinationViewForContextMenuActionDelete.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            destinationViewForContextMenuActionDelete.widthAnchor.constraint(equalToConstant: contentView.bounds.width/20),
+            destinationViewForContextMenuActionDelete.heightAnchor.constraint(equalToConstant: contentView.bounds.height/20)
+        ])
+    }
+    
+    var deleteContextMenuInvoked = false
+    
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
+        let trashImage = UIImage(systemName: "trash")
+        let deleteAction = UIAction(title: "Delete", image: trashImage, identifier: nil, discoverabilityTitle: nil, attributes: .destructive, state: .off) { _ in
+            self.deleteContextMenuInvoked = true
+            if let cellId = self.cellId {
+                self.delegate?.deleteCell(withId: cellId)
+            }
+        }
+        
+        let contextMenu = UIMenu(title: "", image: nil, identifier: nil, options: .destructive, children: [deleteAction])
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { suggestedActions in
+            contextMenu
+        }
+    }
+    
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, previewForDismissingMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        if deleteContextMenuInvoked {
+            return UITargetedPreview(view: destinationViewForContextMenuActionDelete)
+        }
+        
+        return nil
+    }
+    
+    var lastContextMenuInteractionTask: (() -> Void)?
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView! {
@@ -17,6 +80,8 @@ class ImageThumbnailCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    var delegate: ImageThumbnailCellDelegate?
+    var cellId: Int?    
     var imageUrl: String?
     {
         didSet {
@@ -24,6 +89,11 @@ class ImageThumbnailCollectionViewCell: UICollectionViewCell {
             imageView.image = nil
             if let urlString = imageUrl {
                 fetchImage(with: urlString)
+            }
+            
+            if let destinationViewForDelete = destinationViewForContextMenuActionDelete {
+                destinationViewForDelete.removeFromSuperview()
+                destinationViewForContextMenuActionDelete = nil
             }
         }
     }
@@ -60,6 +130,7 @@ class ImageThumbnailCollectionViewCell: UICollectionViewCell {
                             if self?.imageUrl == urlString {
                                 self?.activityIndicator(setTo: .off)
                                 self?.imageView.image = image
+                                self?.createDestinationViewForContextMenuActionDelete()
                             }
                         }
                     }

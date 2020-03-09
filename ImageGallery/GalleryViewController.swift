@@ -8,8 +8,16 @@
 
 import UIKit
 
-class GalleryViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDragDelegate, UICollectionViewDropDelegate
+class GalleryViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDragDelegate, UICollectionViewDropDelegate, ImageThumbnailCellDelegate
 {
+    func deleteCell(withId cellIdForDeletion: Int) {
+        guard let deletionItemIndex = cellList.firstIndex(of: cellIdForDeletion) else {return}
+        cellList.remove(at: deletionItemIndex)
+        cellIdToImageInfo.removeValue(forKey: cellIdForDeletion)
+        let indexPathOfCellToBeDeleted = IndexPath(item: deletionItemIndex, section: 0)
+        collectionView.deleteItems(at: [indexPathOfCellToBeDeleted])
+    }
+    
     var imageGalleryDocument: ImageGalleryDocument!
     
     private var cellList = [Int]() {
@@ -138,7 +146,9 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageThumbnail", for: indexPath)
         if let thumbnailCell = cell as? ImageThumbnailCollectionViewCell {
             let cellId = cellList[indexPath.item]
+            thumbnailCell.cellId = cellId
             thumbnailCell.imageUrl = cellIdToImageInfo[cellId]?.urlString
+            thumbnailCell.delegate = self
             return thumbnailCell
         }
         return cell
