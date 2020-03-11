@@ -114,6 +114,7 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
     }()
     
     private var cellSizeScaleFactor: CGFloat = 1
+    private var minimumWidthOfCell: CGFloat = 100
     
     @IBOutlet weak var collectionView: UICollectionView! {
         didSet {
@@ -149,18 +150,27 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
             thumbnailCell.cellId = cellId
             thumbnailCell.imageUrl = cellIdToImageInfo[cellId]?.urlString
             thumbnailCell.delegate = self
+            thumbnailCell.cellState = getCellState(atIndexPath: indexPath)
             return thumbnailCell
         }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        if selectModeEnabled {
+            return []
+        }
+        
         session.localContext = collectionView
         let dragItem = UIDragItem(itemProvider: NSItemProvider())
         return [dragItem]
     }
     
     func collectionView(_ collectionView: UICollectionView, canHandle session: UIDropSession) -> Bool {
+        if selectModeEnabled {
+            return false
+        }
+        
         let canAcceptDragFromOutside = session.canLoadObjects(ofClass: NSURL.self) && session.canLoadObjects(ofClass: UIImage.self)
         var canAcceptDragFromWithin = false
         if let dragOriginView = session.localDragSession?.localContext as? UICollectionView, dragOriginView == collectionView {
@@ -218,7 +228,7 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let cellId = cellList[indexPath.item]
         let cellAspectRatio = cellIdToImageInfo[cellId]?.aspectRatio ?? 1
-        let cellWidth = min(originalCellWidth * cellSizeScaleFactor, collectionView.bounds.width)
+        let cellWidth = (originalCellWidth * cellSizeScaleFactor).bounded(byLowerBound: minimumWidthOfCell, upperBound: collectionView.bounds.width) //min(originalCellWidth * cellSizeScaleFactor, collectionView.bounds.width)
         let cellHeight = cellAspectRatio * cellWidth
         return CGSize(width: cellWidth, height: cellHeight)
     }
@@ -227,21 +237,114 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
         return IndexPath(item: collectionView.numberOfItems(inSection: 0), section: 0)
     }
     
-    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        if identifier == "ShowFullscreenImage" {
-            if let thumbnailCell = sender as? ImageThumbnailCollectionViewCell {
-                return thumbnailCell.imageView.image != nil
-            }
-        }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let selectedCell = collectionView.cellForItem(at: indexPath), let selectedImageCell = selectedCell as? ImageThumbnailCollectionViewCell else {fatalError()}
         
-        return false
+        switch selectedImageCell.cellState {
+        case .selectionModeOff:
+            if let selectedCellImage = selectedImageCell.imageView.image {
+                performSegue(withIdentifier: "ShowFullscreenImage", sender: selectedCellImage)
+            }
+            
+        case .selectionModeOn:
+            selectedImageCell.cellState = .selected
+            cellsSelectedForDeletion.append(indexPath)
+            
+        case .selected:
+            selectedImageCell.cellState = .selectionModeOn
+            cellsSelectedForDeletion.removeAll { $0 == indexPath }
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowFullscreenImage" {
-            if let thumbnailCell = sender as? ImageThumbnailCollectionViewCell, let fullscreenViewController = segue.destination as? GalleryImageFullscreenController {
-                fullscreenViewController.imageForFullscreen = thumbnailCell.imageView.image
+            if let selectedImage = sender as? UIImage, let fullscreenViewController = segue.destination as? GalleryImageFullscreenController {
+                fullscreenViewController.imageForFullscreen = selectedImage
             }
+        }
+    }
+    
+    //MARK: Deletion of multiple items.
+    
+    var cellsSelectedForDeletion = [IndexPath]() {
+        didSet {
+            updateToolbarItems()
+        }
+    }
+    
+    var selectModeEnabled = false {
+        didSet {
+            selectModeToggled()
+        }
+    }
+    
+    private func updateToolbarItems() {
+        if cellsSelectedForDeletion.isEmpty {
+            selectedItemsLabel.title = "Select Items"
+            deleteButton.isEnabled = false
+        }
+        else {
+            selectedItemsLabel.title = "\(cellsSelectedForDeletion.count) item(s) selected"
+            deleteButton.isEnabled = true
+        }
+    }
+    
+    private func selectModeToggled() {
+        switch selectModeEnabled {
+        case true:
+            selectItemsButton.title = "Cancel"
+            toolbar.isHidden = false
+            collectionView.visibleCells.forEach { collectionViewCell in
+                if let imageThumbnailCell = collectionViewCell as? ImageThumbnailCollectionViewCell {
+                    imageThumbnailCell.cellState = .selectionModeOn
+                }
+            }
+        case false:
+            selectItemsButton.title = "Select"
+            cellsSelectedForDeletion.removeAll()
+            toolbar.isHidden = true
+            collectionView.visibleCells.forEach { collectionViewCell in
+                if let imageThumbnailCell = collectionViewCell as? ImageThumbnailCollectionViewCell {
+                    imageThumbnailCell.cellState = .selectionModeOff
+                }
+            }
+        }
+    }
+    
+    @IBOutlet weak var selectItemsButton: UIBarButtonItem!
+    @IBAction func selectItemsForDeletion(_ sender: UIBarButtonItem) {
+        selectModeEnabled.toggle()
+    }
+    @IBOutlet weak var toolbar: UIToolbar!
+    @IBOutlet weak var selectedItemsLabel: UIBarButtonItem! {
+        didSet {
+            let titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.black]
+            selectedItemsLabel.setTitleTextAttributes(titleTextAttributes, for: .disabled)
+        }
+    }
+    @IBOutlet weak var deleteButton: UIBarButtonItem!
+    @IBAction func deleteSelectedImages(_ sender: UIBarButtonItem) {
+        //Sorting in decreasing order as items in array should be deleted in decreasing order of index.
+        //Deletion otherwise will result in shifting of indexes and can throw out of range exception.
+        
+        cellsSelectedForDeletion.sort { (lhs, rhs) in
+            return lhs.item > rhs.item
+        }
+        cellsSelectedForDeletion.forEach { indexPath in
+            let removedCellId = cellList.remove(at: indexPath.item)
+            cellIdToImageInfo.removeValue(forKey: removedCellId)
+        }
+        collectionView.deleteItems(at: cellsSelectedForDeletion)
+        selectModeEnabled.toggle()
+    }
+    
+    private func getCellState(atIndexPath indexPath: IndexPath) -> ImageThumbnailCollectionViewCell.CellState {
+        switch selectModeEnabled {
+        case true:
+            let cellSelectedForDeletion = cellsSelectedForDeletion.contains(indexPath)
+            return cellSelectedForDeletion ? .selected : .selectionModeOn
+        case false:
+            return .selectionModeOff
         }
     }
 }
@@ -258,6 +361,28 @@ extension URL {
             }
         }
         return nil
+    }
+}
+
+extension UICollectionView {
+    func reloadVisibleCells() {
+        reloadItems(at: indexPathsForVisibleItems)
+    }
+}
+
+extension CGFloat {
+    func bounded(byLowerBound lowerBound: CGFloat, upperBound: CGFloat) -> CGFloat {
+        precondition(lowerBound <= upperBound, "Bound values are invalid. Lower bound is more than upper bound")
+        
+        if self < lowerBound {
+            return lowerBound
+        }
+        
+        if self > upperBound {
+            return upperBound
+        }
+        
+        return self
     }
 }
 

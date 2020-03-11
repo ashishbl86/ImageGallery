@@ -14,6 +14,34 @@ protocol ImageThumbnailCellDelegate {
 
 class ImageThumbnailCollectionViewCell: UICollectionViewCell, UIContextMenuInteractionDelegate {
     
+    enum CellState {
+        case selectionModeOff, selectionModeOn, selected
+    }
+    
+    var cellState = CellState.selectionModeOff {
+        didSet {
+            updateCellState()
+        }
+    }
+    
+    private func updateCellState() {
+        switch cellState {
+        case .selectionModeOff:
+            selectionOverlayView.isHidden = true
+            checkboxUncheckedImageView.isHidden = true
+            checkboxCheckedImageView.isHidden = true
+            
+        case .selectionModeOn:
+            selectionOverlayView.isHidden = true
+            checkboxUncheckedImageView.isHidden = false
+            checkboxCheckedImageView.isHidden = true
+            
+        case .selected:
+            selectionOverlayView.isHidden = false
+            checkboxCheckedImageView.isHidden = false
+        }
+    }
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupContextMenuInteraction()
@@ -49,6 +77,11 @@ class ImageThumbnailCollectionViewCell: UICollectionViewCell, UIContextMenuInter
     var deleteContextMenuInvoked = false
     
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
+        
+        if cellState != .selectionModeOff {
+            return nil
+        }
+        
         let trashImage = UIImage(systemName: "trash")
         let deleteAction = UIAction(title: "Delete", image: trashImage, identifier: nil, discoverabilityTitle: nil, attributes: .destructive, state: .off) { _ in
             self.deleteContextMenuInvoked = true
@@ -65,13 +98,12 @@ class ImageThumbnailCollectionViewCell: UICollectionViewCell, UIContextMenuInter
     
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction, previewForDismissingMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
         if deleteContextMenuInvoked {
+            deleteContextMenuInvoked = false
             return UITargetedPreview(view: destinationViewForContextMenuActionDelete)
         }
         
         return nil
     }
-    
-    var lastContextMenuInteractionTask: (() -> Void)?
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView! {
@@ -138,4 +170,11 @@ class ImageThumbnailCollectionViewCell: UICollectionViewCell, UIContextMenuInter
             }
         }
     }
+    
+    //MARK: Related to selection of cell
+    @IBOutlet weak var selectionOverlayView: UIView!
+    @IBOutlet weak var checkboxUncheckedImageView: UIImageView!
+    @IBOutlet weak var checkboxCheckedImageView: UIImageView!
+    
+    
 }
