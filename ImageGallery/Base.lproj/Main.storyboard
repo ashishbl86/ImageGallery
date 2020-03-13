@@ -109,7 +109,7 @@ Drag and drop to add images.</string>
                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3TZ-Ad-ScM">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3TZ-Ad-ScM">
                                 <rect key="frame" x="0.0" y="1062" width="834" height="50"/>
                                 <items>
                                     <barButtonItem enabled="NO" id="D72-yC-fB6"/>
@@ -126,8 +126,6 @@ Drag and drop to add images.</string>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="PVl-Xx-uGw" firstAttribute="bottom" secondItem="3TZ-Ad-ScM" secondAttribute="bottom" id="2sn-0l-UZL"/>
-                            <constraint firstItem="3TZ-Ad-ScM" firstAttribute="centerX" secondItem="PVl-Xx-uGw" secondAttribute="centerX" id="DPk-GQ-gyw"/>
                             <constraint firstItem="PVl-Xx-uGw" firstAttribute="trailing" secondItem="Tif-Dg-U12" secondAttribute="trailing" id="LUi-AC-EuW"/>
                             <constraint firstItem="3TZ-Ad-ScM" firstAttribute="width" secondItem="PVl-Xx-uGw" secondAttribute="width" id="XFa-sb-48f"/>
                             <constraint firstItem="Tif-Dg-U12" firstAttribute="top" secondItem="PVl-Xx-uGw" secondAttribute="top" id="d4s-gV-qLd"/>
