@@ -173,7 +173,7 @@ Drag and drop to add images.</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L3a-Z8-wG8">
-                                <rect key="frame" x="0.0" y="60" width="834" height="1042"/>
+                                <rect key="frame" x="0.0" y="35" width="834" height="1042"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="300" placeholderIntrinsicHeight="300" translatesAutoresizingMaskIntoConstraints="NO" id="pYR-0y-Rjg">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
@@ -192,12 +192,12 @@ Drag and drop to add images.</string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="L3a-Z8-wG8" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="cF5-jb-ZUE" secondAttribute="trailing" id="8i4-Ss-ac6"/>
-                            <constraint firstItem="L3a-Z8-wG8" firstAttribute="centerY" secondItem="cF5-jb-ZUE" secondAttribute="centerY" id="CJA-Il-NlV"/>
-                            <constraint firstItem="L3a-Z8-wG8" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="cF5-jb-ZUE" secondAttribute="leading" id="I0c-Jr-5pl"/>
-                            <constraint firstItem="L3a-Z8-wG8" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="cF5-jb-ZUE" secondAttribute="bottom" id="aMB-p0-uxr"/>
-                            <constraint firstItem="L3a-Z8-wG8" firstAttribute="centerX" secondItem="cF5-jb-ZUE" secondAttribute="centerX" id="mci-63-rkq"/>
-                            <constraint firstItem="L3a-Z8-wG8" firstAttribute="top" relation="greaterThanOrEqual" secondItem="cF5-jb-ZUE" secondAttribute="top" id="y8E-e3-g9U"/>
+                            <constraint firstItem="L3a-Z8-wG8" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="4dN-Dl-uJx" secondAttribute="trailing" id="8i4-Ss-ac6"/>
+                            <constraint firstItem="L3a-Z8-wG8" firstAttribute="centerY" secondItem="4dN-Dl-uJx" secondAttribute="centerY" id="CJA-Il-NlV"/>
+                            <constraint firstItem="L3a-Z8-wG8" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="4dN-Dl-uJx" secondAttribute="leading" id="I0c-Jr-5pl"/>
+                            <constraint firstItem="L3a-Z8-wG8" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="4dN-Dl-uJx" secondAttribute="bottom" id="aMB-p0-uxr"/>
+                            <constraint firstItem="L3a-Z8-wG8" firstAttribute="centerX" secondItem="4dN-Dl-uJx" secondAttribute="centerX" id="mci-63-rkq"/>
+                            <constraint firstItem="L3a-Z8-wG8" firstAttribute="top" relation="greaterThanOrEqual" secondItem="4dN-Dl-uJx" secondAttribute="top" id="y8E-e3-g9U"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="cF5-jb-ZUE"/>
                     </view>

@@ -58,7 +58,7 @@ class ImageDisplayViewControllerAnimationHandler: NSObject, UIViewControllerAnim
         
         let toView = transitionContext.view(forKey: .to)!
         transitionContext.containerView.addSubview(toView)
-        toView.layoutIfNeeded() //Required else frame info extracted from toView will not be correct. And this call has to be after adding as the subview to container view
+        toView.layoutIfNeeded() //Required else frame info extracted from toView will not be correct. And this call has to be made after adding as the subview to container view
         
         if animationType == .showFullscreen {
             toView.isHidden = true
