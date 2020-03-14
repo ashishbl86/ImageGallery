@@ -16,6 +16,7 @@
 		FFB43597225ED13F00732E2C /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB43594225ED13F00732E2C /* GalleryViewController.swift */; };
 		FFB43598225ED13F00732E2C /* ImageThumbnailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB43595225ED13F00732E2C /* ImageThumbnailCollectionViewCell.swift */; };
 		FFB43599225ED13F00732E2C /* GalleryImageFullscreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB43596225ED13F00732E2C /* GalleryImageFullscreenController.swift */; };
+		FFD565DC241BD66D009591AD /* ImageDisplayViewControllerAnimationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD565DB241BD66D009591AD /* ImageDisplayViewControllerAnimationHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		FFB43594225ED13F00732E2C /* GalleryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
 		FFB43595225ED13F00732E2C /* ImageThumbnailCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageThumbnailCollectionViewCell.swift; sourceTree = "<group>"; };
 		FFB43596225ED13F00732E2C /* GalleryImageFullscreenController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GalleryImageFullscreenController.swift; sourceTree = "<group>"; };
+		FFD565DB241BD66D009591AD /* ImageDisplayViewControllerAnimationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDisplayViewControllerAnimationHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 				FF56CD69225D80CB00E9D1D2 /* DocumentBrowserViewController.swift */,
 				FF56CD6D225D80CB00E9D1D2 /* ImageGalleryDocument.swift */,
 				FFB43594225ED13F00732E2C /* GalleryViewController.swift */,
+				FFD565DB241BD66D009591AD /* ImageDisplayViewControllerAnimationHandler.swift */,
 				FFB43595225ED13F00732E2C /* ImageThumbnailCollectionViewCell.swift */,
 				FFB43596225ED13F00732E2C /* GalleryImageFullscreenController.swift */,
 				FF56CD72225D80CC00E9D1D2 /* Assets.xcassets */,
@@ -179,6 +182,7 @@
 				FF56CD6A225D80CB00E9D1D2 /* DocumentBrowserViewController.swift in Sources */,
 				FF56CD68225D80CB00E9D1D2 /* AppDelegate.swift in Sources */,
 				FFB43599225ED13F00732E2C /* GalleryImageFullscreenController.swift in Sources */,
+				FFD565DC241BD66D009591AD /* ImageDisplayViewControllerAnimationHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

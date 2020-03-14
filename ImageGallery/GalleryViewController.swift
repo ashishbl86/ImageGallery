@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GalleryViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDragDelegate, UICollectionViewDropDelegate, ImageThumbnailCellDelegate, UINavigationControllerDelegate, UIViewControllerAnimatedTransitioning
+class GalleryViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDragDelegate, UICollectionViewDropDelegate, ImageThumbnailCellDelegate, UINavigationControllerDelegate
 {
     func deleteCell(withId cellIdForDeletion: Int) {
         guard let deletionItemIndex = cellList.firstIndex(of: cellIdForDeletion) else {return}
@@ -243,7 +243,6 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
         
         switch selectedImageCell.cellState {
         case .selectionModeOff:
-            transitionInitiaingCell = selectedCell
             if let selectedCellImage = selectedImageCell.imageView.image {
                 performSegue(withIdentifier: "ShowFullscreenImage", sender: selectedCellImage)
             }
@@ -400,78 +399,15 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
     
     //MARK: Transition Animation
     
-    let transitionDuration = 0.5//4.0
-    var transitionInitiaingCell: UICollectionViewCell!
-    
-    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        if fromVC is GalleryViewController, toVC is GalleryImageFullscreenController {
-            return self
+    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {        
+        switch operation {
+        case .push:
+            return ImageDisplayViewControllerAnimationHandler(animationType: .showFullscreen)
+        case .pop:
+            return ImageDisplayViewControllerAnimationHandler(animationType: .showThumbnails)
+        default:
+            return nil
         }
-        
-//        if let galleryVC = fromVC as? GalleryViewController, let fullScreenImageVC = toVC as? GalleryImageFullscreenController {
-//            return self
-//        }
-        //        else if let galleryVC = fromVC as? GalleryImageFullscreenController, let fullScreenImageVC = toVC as? GalleryViewController {
-        //
-        //        }
-        
-        return nil
-    }
-    
-    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return transitionDuration
-    }
-    
-    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        //let fromView = transitionContext.view(forKey: .from)!
-
-        //Adding "to" view controller's view in container view
-        let toView = transitionContext.view(forKey: .to)!
-        transitionContext.containerView.addSubview(toView)
-        toView.layoutIfNeeded()
-        toView.isHidden = true
-
-        //Get thumbnail frame
-        let thumbnailImageFrame = transitionContext.containerView.convert(transitionInitiaingCell.bounds, from: transitionInitiaingCell)
-        let thumbnailInitiatingViewSnapshot = transitionInitiaingCell.snapshotView(afterScreenUpdates: false)!
-        thumbnailInitiatingViewSnapshot.frame = thumbnailImageFrame
-        let blankView = UIView(frame: thumbnailImageFrame)
-        blankView.backgroundColor = toView.backgroundColor
-        transitionContext.containerView.addSubview(blankView)
-
-        let toVC = transitionContext.viewController(forKey: .to) as! GalleryImageFullscreenController
-
-        let fullscreenImageFrame = transitionContext.containerView.convert(toVC.imageView.bounds, from: toVC.imageView)
-        let fullscreenImageSnapshot = toVC.imageView.snapshotView(afterScreenUpdates: true)!
-        let fullscreenImageOriginalLocation = fullscreenImageFrame.center
-        
-        let scaleFactorX = thumbnailImageFrame.width/fullscreenImageFrame.width
-        let scaleFactorY = thumbnailImageFrame.height/fullscreenImageFrame.height
-        
-        fullscreenImageSnapshot.frame = fullscreenImageFrame
-        fullscreenImageSnapshot.transform = CGAffineTransform.identity.scaledBy(x: scaleFactorX, y: scaleFactorY)
-        fullscreenImageSnapshot.center = thumbnailImageFrame.center
-        transitionContext.containerView.addSubview(fullscreenImageSnapshot)
-        
-        let thumbnailAnimation = UIViewPropertyAnimator(duration: transitionDuration, dampingRatio: CGFloat(0.75)) {
-            fullscreenImageSnapshot.center = fullscreenImageOriginalLocation
-            fullscreenImageSnapshot.transform = CGAffineTransform.identity
-        }
-        
-        let backgroundAnimation = UIViewPropertyAnimator(duration: transitionDuration, dampingRatio: CGFloat(1.0)) {
-            blankView.frame = toView.frame
-        }
-        
-        backgroundAnimation.addCompletion { _ in
-            toView.isHidden = false
-            blankView.removeFromSuperview()
-            fullscreenImageSnapshot.removeFromSuperview()
-            //thumbnailInitiatingViewSnapshot.removeFromSuperview()
-            transitionContext.completeTransition(true)
-        }
-        
-        thumbnailAnimation.startAnimation()
-        backgroundAnimation.startAnimation()
     }
 }
 
