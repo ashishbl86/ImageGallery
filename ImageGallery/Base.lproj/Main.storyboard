@@ -172,21 +172,12 @@ Drag and drop to add images.</string>
                         <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L3a-Z8-wG8">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L3a-Z8-wG8">
                                 <rect key="frame" x="0.0" y="35" width="834" height="1042"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="300" placeholderIntrinsicHeight="300" translatesAutoresizingMaskIntoConstraints="NO" id="pYR-0y-Rjg">
-                                        <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
-                                    </imageView>
-                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" priority="250" constant="1042" id="RIW-Gj-W1K"/>
-                                    <constraint firstItem="pYR-0y-Rjg" firstAttribute="leading" secondItem="L3a-Z8-wG8" secondAttribute="leading" id="ZDz-rH-O4l"/>
-                                    <constraint firstItem="pYR-0y-Rjg" firstAttribute="top" secondItem="L3a-Z8-wG8" secondAttribute="top" id="bDs-KD-QtF"/>
-                                    <constraint firstAttribute="bottom" secondItem="pYR-0y-Rjg" secondAttribute="bottom" id="ifD-Jw-E6Y"/>
                                     <constraint firstAttribute="width" priority="250" constant="834" id="lJl-5D-LFD"/>
-                                    <constraint firstAttribute="trailing" secondItem="pYR-0y-Rjg" secondAttribute="trailing" id="lN1-9Z-ApX"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
@@ -203,7 +194,6 @@ Drag and drop to add images.</string>
                     </view>
                     <navigationItem key="navigationItem" id="b14-yc-rvc"/>
                     <connections>
-                        <outlet property="imageView" destination="pYR-0y-Rjg" id="htd-re-oAU"/>
                         <outlet property="scrollView" destination="L3a-Z8-wG8" id="cNz-EJ-j8h"/>
                         <outlet property="scrollViewHeight" destination="RIW-Gj-W1K" id="jpm-ai-gOf"/>
                         <outlet property="scrollViewWidth" destination="lJl-5D-LFD" id="WIg-ke-6hp"/>

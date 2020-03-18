@@ -17,20 +17,19 @@ class GalleryImageFullscreenController: UIViewController, UIScrollViewDelegate {
         }
     }
     
-    @IBOutlet weak var imageView: UIImageView!
+    let imageView = UIImageView()
     @IBOutlet weak var scrollViewWidth: NSLayoutConstraint!
     @IBOutlet weak var scrollViewHeight: NSLayoutConstraint!
     
     var navigationControllerHidesBarOnTapDefaultValue = false
-    var isTogglingOfNavigationBarOnZoomEnabled = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        scrollViewWidth.constant = view.bounds.width/2
-        scrollViewHeight.constant = view.bounds.height/2
-        scrollView.minimumZoomScale = calculateMinimumZoomScale()
-        scrollView.maximumZoomScale = scrollView.minimumZoomScale * 3
+        scrollView.minimumZoomScale = 1
+        scrollView.maximumZoomScale = 3
         imageView.image = imageForFullscreen
+        imageView.contentMode = .scaleAspectFit
+        scrollView.addSubview(imageView)
         
         navigationControllerHidesBarOnTapDefaultValue = navigationController?.hidesBarsOnTap ?? false
         navigationController?.hidesBarsOnTap = true
@@ -40,43 +39,68 @@ class GalleryImageFullscreenController: UIViewController, UIScrollViewDelegate {
         navigationController?.hidesBarsOnTap = navigationControllerHidesBarOnTapDefaultValue
     }
     
-    func calculateMinimumZoomScale() -> CGFloat {
-        if let imageSize = imageForFullscreen?.size {
-            let scaleXValue = view.bounds.width/imageSize.width
-            let scaleYValue = view.bounds.height/imageSize.height
-            return min(scaleXValue, scaleYValue)
-        }
-        
-        return 0.5
-    }
-    
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageView
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        isTogglingOfNavigationBarOnZoomEnabled = true
+    var lastViewSizeAtLayoutSubviews = CGRect.zero
+    var contentAreaPrepared = false
+    
+    override func viewWillLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if !contentAreaPrepared {
+            let sizeForImageView = computeSizeOf(imageForFullscreen!.size, toFitIn: view.bounds.size, withScaleFactor: scrollView.zoomScale)
+            imageView.frame = CGRect(origin: CGPoint.zero, size: sizeForImageView)
+            scrollView.contentSize = sizeForImageView
+            contentAreaPrepared = true
+        }
+        
+        if view.bounds != lastViewSizeAtLayoutSubviews {
+            lastViewSizeAtLayoutSubviews = view.bounds
+            scrollViewWidth.constant = scrollView.contentSize.width
+            scrollViewHeight.constant = scrollView.contentSize.height
+        }
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        if (scrollView.zoomScale == 1) {
+            scrollView.contentOffset = CGPoint.zero
+        }
         view.backgroundColor = (navigationController?.isNavigationBarHidden ?? false) ? .black : .white
         scrollView.backgroundColor = view.backgroundColor
+    }
+    
+    private func computeSizeOf(_ sizeOfItemToFit: CGSize, toFitIn sizeOfFrameFitIn: CGSize, withScaleFactor scaleFactor: CGFloat) -> CGSize {
+        let aspectRatioOfItem = sizeOfItemToFit.aspectRatio
+        let aspectRatioOfFrame = sizeOfFrameFitIn.aspectRatio
+        
+        var sizeFittingForItem = CGSize.zero
+        
+        if aspectRatioOfItem >= aspectRatioOfFrame {
+            sizeFittingForItem.width = sizeOfFrameFitIn.width
+            sizeFittingForItem.height = sizeOfFrameFitIn.width / aspectRatioOfItem
+        }
+        else {
+            sizeFittingForItem.height = sizeOfFrameFitIn.height
+            sizeFittingForItem.width = sizeOfFrameFitIn.height * aspectRatioOfItem
+        }
+        
+        sizeFittingForItem.width *= scaleFactor
+        sizeFittingForItem.height *= scaleFactor
+        
+        return sizeFittingForItem
     }
     
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
         scrollViewWidth.constant = scrollView.contentSize.width
         scrollViewHeight.constant = scrollView.contentSize.height
-        
-        if isTogglingOfNavigationBarOnZoomEnabled {
-            navigationController?.isNavigationBarHidden = true
-        }
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        view.layoutIfNeeded()
-        scrollView.zoom(to: imageView.bounds, animated: false)
+}
+
+extension CGSize {
+    var aspectRatio: CGFloat {
+        return width/height
     }
 }
