@@ -27,6 +27,7 @@ class GalleryImageFullscreenController: UIViewController, UIScrollViewDelegate {
         super.viewDidLoad()
         scrollView.minimumZoomScale = 1
         scrollView.maximumZoomScale = 3
+        scrollView.contentSize = CGSize.zero
         imageView.image = imageForFullscreen
         imageView.contentMode = .scaleAspectFit
         scrollView.addSubview(imageView)
@@ -44,20 +45,16 @@ class GalleryImageFullscreenController: UIViewController, UIScrollViewDelegate {
     }
     
     var lastViewSizeAtLayoutSubviews = CGRect.zero
-    var contentAreaPrepared = false
     
     override func viewWillLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        if !contentAreaPrepared {
-            let sizeForImageView = computeSizeOf(imageForFullscreen!.size, toFitIn: view.bounds.size, withScaleFactor: scrollView.zoomScale)
-            imageView.frame = CGRect(origin: CGPoint.zero, size: sizeForImageView)
-            scrollView.contentSize = sizeForImageView
-            contentAreaPrepared = true
-        }
-        
         if view.bounds != lastViewSizeAtLayoutSubviews {
             lastViewSizeAtLayoutSubviews = view.bounds
+            let sizeForImageView = computeSizeOf(imageForFullscreen!.size, toFitIn: view.bounds.size)
+            scrollView.zoomScale = 1 //INFO: Setting of zoom scale triggers zooming of scroll view resulting into change of content size
+            scrollView.contentSize = sizeForImageView
+            imageView.frame = CGRect(origin: CGPoint.zero, size: scrollView.contentSize)            
             scrollViewWidth.constant = scrollView.contentSize.width
             scrollViewHeight.constant = scrollView.contentSize.height
         }
@@ -65,14 +62,16 @@ class GalleryImageFullscreenController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
         if (scrollView.zoomScale == 1) {
             scrollView.contentOffset = CGPoint.zero
         }
+        
         view.backgroundColor = (navigationController?.isNavigationBarHidden ?? false) ? .black : .white
         scrollView.backgroundColor = view.backgroundColor
     }
     
-    private func computeSizeOf(_ sizeOfItemToFit: CGSize, toFitIn sizeOfFrameFitIn: CGSize, withScaleFactor scaleFactor: CGFloat) -> CGSize {
+    private func computeSizeOf(_ sizeOfItemToFit: CGSize, toFitIn sizeOfFrameFitIn: CGSize) -> CGSize {
         let aspectRatioOfItem = sizeOfItemToFit.aspectRatio
         let aspectRatioOfFrame = sizeOfFrameFitIn.aspectRatio
         
@@ -86,9 +85,6 @@ class GalleryImageFullscreenController: UIViewController, UIScrollViewDelegate {
             sizeFittingForItem.height = sizeOfFrameFitIn.height
             sizeFittingForItem.width = sizeOfFrameFitIn.height * aspectRatioOfItem
         }
-        
-        sizeFittingForItem.width *= scaleFactor
-        sizeFittingForItem.height *= scaleFactor
         
         return sizeFittingForItem
     }
@@ -104,3 +100,4 @@ extension CGSize {
         return width/height
     }
 }
+
