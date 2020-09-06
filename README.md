@@ -5,7 +5,7 @@ ImageGallery is an iOS app for saving images using iOS' Drag and Drop feature.
 
 This is an iPad only app, where you can drag in images from other apps and save them into image galleries.  This app uses UIKit's ```UIDocument``` to store the image galleries as documents. And extending the use of Documents, this app uses UIKit's ```UIDocumentBrowserViewController```. It allows users to create, move, rename etc. the image galleries using the UI that is similar to the **Files** app.
 
-One to note is that the other app (i.e. from which images are dragged) also needs to provide an image URL as well. Reason is, that ImageGallery only stores the image URL's and not the actual images in order to reduce it's memory footprint.
+Only thing to note is that the other app (i.e. from which images are dragged) also needs to provide an image URL as well. Reason is, that ImageGallery only stores the image URL's and not the actual images in order to reduce it's memory footprint.
 
 For testing purposes, new galleries are created with few sample images instead of being empty.
 
